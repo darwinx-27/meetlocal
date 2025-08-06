@@ -21,7 +21,7 @@ LocalMeet est une application de messagerie instantanée et de visioconférence 
 1. **Cloner le dépôt**
    ```bash
    git clone [URL_DU_DEPOT]
-   cd mumble2-hello
+   cd localmeet
    ```
 
 2. **Installer les dépendances**
