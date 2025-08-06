@@ -1,10 +1,10 @@
-# Mumble2 - Application de Chat Local avec Salons
+# LocalMeet - Application de Réunion Locale
 
-Mumble2 est une application de messagerie instantanée en temps réel qui permet aux utilisateurs de communiquer via des salons de discussion sécurisés. L'application supporte la messagerie texte et les appels vocaux en utilisant WebRTC pour une communication peer-to-peer.
+LocalMeet est une application de messagerie instantanée et de visioconférence en temps réel, basée sur Mumble2. Elle permet aux utilisateurs de communiquer via des salons de discussion sécurisés avec support de la messagerie texte et des appels vocaux/vidéo en utilisant WebRTC pour une communication peer-to-peer.
 
 ## Fonctionnalités Principales
 
-- 🎤 Communication vocale en temps réel via WebRTC
+- 🎤 Communication vocale et vidéo en temps réel via WebRTC
 - 💬 Messagerie instantanée dans des salons de discussion
 - 🔒 Connexion sécurisée avec HTTPS et WebSockets
 - 👥 Gestion des utilisateurs et des salons
@@ -52,7 +52,7 @@ Mumble2 est une application de messagerie instantanée en temps réel qui permet
 ## Structure des Fichiers
 
 ```
-mumble2-hello/
+localmeet/
 ├── public/           # Fichiers statiques (HTML, CSS, JS, images)
 ├── ssl/              # Certificats SSL
 ├── server.js         # Serveur principal
