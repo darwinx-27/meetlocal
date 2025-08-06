@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>LOCAL MEET - Vidéoconférence en local</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='css/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='css/index.css'>
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <div class="container">
+        <main id="main">
+            <div class="welcome-container">
+                <div class="logo-circle">
+                    <img src="images/logo.png" alt="ICTD4 Meeting Logo" class="logo-image">
+                    <div class="logo-pulse"></div>
+                </div>
+                
+                <div id="welcome">
+                    <h1>Bienvenue sur <span class="brand-gradient">LOCAL MEET</span></h1>
+                    <p class="subtitle">Solution de vidéoconférence sécurisée en local</p>
+                    
+                    <div class="option-buttons">
+                        <button id="create-meeting-btn" class="option-btn">
+                            <i class="icon-video"></i>
+                            Créer une réunion
+                        </button>
+                        <button id="join-meeting-btn" class="option-btn">
+                            <i class="icon-join"></i>
+                            Rejoindre
+                        </button>
+                        <button id="connection-info-btn" class="option-btn">
+                            <i class="icon-link"></i>
+                            Lien de connexion
+                        </button>
+                    </div>
+                    
+                    <div class="action-container">
+                        <div id="create__room" class="form-section card">
+                            <h2><i class="icon-create"></i> Créer une nouvelle réunion</h2>
+                            <form id="create__room__form">
+                                <div class="input-group">
+                                    <input type="text" name="userName" placeholder=" " required />
+                                    <label>Votre nom</label>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" name="roomName" placeholder=" " required />
+                                    <label>Nom de la réunion</label>
+                                </div>
+                                <input type="hidden" name="customRoomId" value="" />
+                                <p class="form-help">Un identifiant unique sera généré automatiquement</p>
+                                <button type="submit" class="submit-btn">
+                                    <i class="icon-rocket"></i>
+                                    Lancer la réunion
+                                </button>
+                            </form>
+                        </div>
+
+                        <div id="join__room" class="form-section card">
+                            <h2><i class="icon-enter"></i> Rejoindre une réunion</h2>
+                            <form id="join__room__form">
+                                <div class="input-group">
+                                    <input type="text" name="userName" placeholder=" " required />
+                                    <label>Votre nom</label>
+                                </div>
+                                <p class="form-help">Laissez vide pour rejoindre la réunion active</p>
+                                
+                            </form>
+                        </div>
+
+                        <div id="connection-info" class="form-section card">
+                            <h2><i class="icon-share"></i> Lien de connexion</h2>
+                            <div class="link-container">
+                                <div id="connection-details" class="link-display">Chargement...</div>
+                                
+                            </div>
+                            <div class="qr-code-container">
+                                <div id="qr-code"></div>
+                            </div>
+                        </div>
+
+                        <div id="active__rooms" class="form-section card">
+                            <h2><i class="icon-list"></i> Réunions actives</h2>
+                            <div id="rooms__list" class="rooms-grid">
+                                <!-- Les salles seront ajoutées dynamiquement ici -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/libs/socket.io.min.js"></script>
+    <script src="js/libs/qrcode.min.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

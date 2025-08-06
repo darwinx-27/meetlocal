@@ -1,0 +1,188 @@
+/**
+ * Styles pour le bloc de chat
+ * Fichier autonome avec toutes les variables CSS nécessaires
+ */
+
+/* Variables CSS locales pour ce fichier */
+:root {
+    /* Couleurs et fonds */
+    --text-light: #ffffff;
+    --bg-light: #f5f5f5;
+    --bg-primary: #1976d2;
+    --primary: #1976d2;
+    --border-color: #e0e0e0;
+    --blue-gradient: linear-gradient(90deg, #1976d2 0%, #63a4ff 100%);
+    --blue-gradient-dark: linear-gradient(90deg, #0d47a1 0%, #1976d2 100%);
+    
+    /* Dimensions et espacements */
+    --border-radius: 8px;
+}
+
+#block_chat {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    /*===================================================================================
+      ------> MODIFICATIONS Debut: Ajout d'une font d'ecran pour le chat de messages
+    =====================================================================================
+    */
+    background-image: url("../images/font4.jpg");
+    /*===================================================================================
+      ------> MODIFICATIONS Fin: 
+    =====================================================================================
+    */
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Pour que le fond ne soit pas masqué par les enfants */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Styles pour le contenu du chat */
+#room__chat {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+#messages__container {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding-right: 0.5rem;
+    scroll-behavior: smooth;
+}
+
+#messages__container::-webkit-scrollbar {
+    width: 6px;
+}
+
+#messages__container::-webkit-scrollbar-track {
+    background: var(--bg-light);
+    border-radius: 3px;
+}
+
+#messages__container::-webkit-scrollbar-thumb {
+    background: var(--bg-primary);
+    border-radius: 3px;
+}
+
+#messages__container::-webkit-scrollbar-thumb {
+    background: var(--bg-primary);
+    border-radius: 3px;
+}
+
+.message {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    max-width: 85%;
+}
+
+/* Bulles de messages transparentes */
+
+.message.sent {
+    /*===================================================================================
+      ------> MODIFICATIONS Debut: Changement de la couleur du message d'envoi
+    =====================================================================================
+    */
+    background: rgba(40, 167, 69, 0.85); /* Vert avec transparence */
+    color: #fff;
+    align-self: flex-end;
+    margin-left: auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    
+    /*===================================================================================
+      ------> MODIFICATIONS Fin: 
+    =====================================================================================
+    */
+}
+
+.message.received {
+    /*===================================================================================
+      ------> MODIFICATIONS Debut: Changement de la couleur du message recu
+    =====================================================================================
+    */
+    background: rgba(25, 118, 210, 0.85); /* Bleu avec transparence */
+    color: #fff;
+    align-self: flex-start;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    
+    /*===================================================================================
+      ------> MODIFICATIONS Fin: 
+    =====================================================================================
+    */
+}
+
+.message .sender {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+}
+
+.message .sender.sent {
+    color: var(--text-light);
+}
+
+/* Zone d'écriture transparente */
+#message__form {
+    margin-top: auto;
+    display: flex;
+    position: sticky;
+    bottom: 0;
+    background: rgba(255,255,255,0.7); /* Blanc semi-transparent */
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    backdrop-filter: blur(2px);
+    
+}
+
+#message__form input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 0.1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-right: 0.5rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#message__form input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+#message__form button {
+    padding: 0.75rem;
+    background: var(--blue-gradient);
+    color: var(--text-light);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px 0 #1976d21c;
+}
+
+#message__form button:hover {
+    background: var(--blue-gradient-dark);
+    transform: scale(1.05);
+    box-shadow: 0 6px 24px 0 rgba(25, 118, 210, 0.23);
+}
+
+#message__form button:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px 0 rgba(25, 118, 210, 0.15);
+}
+
+/* Styles responsifs */
+@media screen and (max-width: 768px) {
+    #block_chat {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}

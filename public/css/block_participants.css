@@ -1,0 +1,143 @@
+:root {
+    --text-dark: #1a237e;
+    --text-muted: #757575;
+    --bg-light: #f5f5f5;
+    --bg-white: #ffffff;
+    --blue-gradient: linear-gradient(90deg, #1976d2 0%, #63a4ff 100%);
+    --primary-color: #1976d2;
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
+}
+
+#block_participants {
+    width: 270px;
+    background: rgba(255, 255, 255, 0.459);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    /*midication pour l'effet ripple soit en arière plant*/
+    position: relative; /* nécessaire pour que z-index fonctionne */
+    z-index: 1; /* au-dessus du ripple */
+
+}
+
+#block_participants.hidden-section {
+    display: none;
+}
+
+#block_participants h3 {
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#users__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+#users__list li {
+    margin-bottom: 0.5rem;
+    padding: 0.6rem 0.5rem;
+    border-radius: var(--border-radius);
+    background: var(--bg-light);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--text-dark);
+    border-bottom: 1px solid #eee;
+    transition: background var(--transition-speed);
+}
+
+#users__list li:hover {
+    background: #e3f2fd;
+}
+
+.user-avatar {
+    font-size: 1.5rem;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    line-height: 32px;
+    background: #dbeafe;
+    border-radius: 50%;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.user-name {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.user-status {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.mic-icon {
+    font-size: 1rem;
+}
+
+.creator-badge {
+    margin-top: 1rem;
+    padding: 0.6rem 0.8rem;
+    background: var(--blue-gradient);
+    color: white;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    text-align: center;
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.creator-badge .admin-icon {
+    margin-right: 6px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media screen and (max-width: 768px) {
+    #block_participants {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}
+
+.user-avatar {
+    font-size: 0.85rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #dbeafe;
+    border-radius: 50%;
+    color: var(--primary-color);
+    font-weight: bold;
+    text-transform: uppercase;
+}

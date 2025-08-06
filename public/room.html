@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>ROOM</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/body_room.css">
+    <link rel="stylesheet" href="css/room_container.css">
+    <link rel="stylesheet" href="css/room_main.css">
+    <link rel="stylesheet" href="css/room.css">
+    <link rel="stylesheet" href="css/block_participants.css">
+    <link rel="stylesheet" href="css/block_chat.css">
+    <link rel="stylesheet" href="css/block_bouton.css">
+    <style>
+        /* Style supplémentaire pour les icônes */
+        .stream__btn img {
+            width: 24px;
+            height: 24px;
+        }
+        
+        /* Animation pour les boutons au hover */
+        .stream__btn:hover img {
+            animation: pulse 0.3s ease-in-out;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Style pour le bouton actif */
+        .stream__btn.active-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Classes pour gérer l'affichage/masquage des sections */
+        .hidden-section {
+            display: none;
+        }
+        
+        .active-section {
+            display: block;
+        }
+        
+        /* Style pour le bloc de chat */
+        #room__chat {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        #messages__container {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+        
+        #message__form {
+            margin-top: auto;
+            display: flex;
+            position: sticky;
+            bottom: 0;
+            background-image: url("./images/font4.jpg");
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="room__container">
+        
+
+        <main id="room__main">
+            <!--MODIFICATION APORTER POUR AMELIORERLE CSS-->
+<div id="block_participants" class="hidden-section">
+<h3><span class="icon">👥</span> Participants <span id="user-count">(0)</span></h3>
+  <ul id="users__list"></ul>
+
+    <!-- Badge administrateur -->
+    <div id="creator-status" class="creator-badge">
+        <span class="admin-icon">👑</span> Vous êtes l'administrateur de cette réunion
+    </div>
+</div>
+            
+            <!-- Slider de volume déplacé hors de la barre de contrôle, maintenant flottant -->
+            <div class="volume-slider-container" style="position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: rgba(32, 33, 36, 0.9); padding: 8px 16px; border-radius: 16px; display: none; z-index: 1000;">
+                <label for="volume-slider" style="color: white;">Volume:</label>
+                <input type="range" id="volume-slider" min="0" max="100" value="100" class="slider" style="width: 150px;">
+            </div>
+            
+            <div id="block_bouton">
+                <div class="stream__controls">
+                    <!-- Contrôles audio (micro) -->
+                    <button id="mute__audio__btn" class="stream__btn main-control">
+                        <img src="images/icons/micro-on.svg" alt="Microphone activé" width="24" height="24">
+                        <span class="tooltip">Couper le micro</span>
+                    </button>
+                    <button id="unmute__audio__btn" class="stream__btn main-control" style="display: none;">
+                        <img src="images/icons/micro-off.svg" alt="Microphone désactivé" width="24" height="24">
+                        <span class="tooltip">Activer le micro</span>
+                    </button>
+                    
+                    <!-- Contrôles vidéo (caméra) -->
+                    <button id="start__stream__btn" class="stream__btn main-control">
+                        <img src="images/icons/camera-on.svg" alt="Caméra activée" width="24" height="24">
+                        <span class="tooltip">Démarrer la caméra</span>
+                    </button>
+                    <button id="stop__stream__btn" class="stream__btn main-control" style="display: none;">
+                        <img src="images/icons/camera-off.svg" alt="Caméra désactivée" width="24" height="24">
+                        <span class="tooltip">Arrêter la caméra</span>
+                    </button>
+                    
+
+                    <!-- Contrôles pour quitter/terminer la réunion -->
+                    <button id="leave__meeting__btn" class="stream__btn main-control end-meeting">
+                        <img src="images/icons/leave-meeting.svg" alt="Quitter la réunion" width="24" height="24">
+                        <span class="tooltip">Quitter la réunion</span>
+                    </button>
+
+                    <!-- Partage d'écran -->
+                    <button id="start__screen__btn" class="stream__btn">
+                        <img src="images/icons/screen-share.svg" alt="Partager l'écran" width="24" height="24">
+                        <span class="tooltip">Partager l'écran</span>
+                    </button>
+                    <button id="stop__screen__btn" class="stream__btn" style="display: none;">
+                        <img src="images/icons/stop-screen-share.svg" alt="Arrêter le partage" width="24" height="24">
+                        <span class="tooltip">Arrêter le partage</span>
+                    </button>
+                    <!-- Contrôles boutons masqués -->
+                    <button id="plus" class="stream__btn main-control end-meeting" onclick="toggleButtons()">
+                        ...
+                        <span class="tooltip">plus</span>
+                    </button>
+                    
+                    
+                    <!-- Contrôle plein écran -->
+                    <button id="fullscreen__btn" class="stream__btn">
+                        <img src="images/icons/fullscreen.svg" alt="Plein écran" width="24" height="24">
+                        <span class="tooltip">Plein écran</span>
+                    </button>
+                    
+                    <!-- Rafraîchir l'affichage -->
+                    <button id="refresh__video__btn" class="stream__btn">
+                        <img src="images/icons/refresh.svg" alt="Rafraîchir l'affichage" width="24" height="24">
+                        <span class="tooltip">Rafraîchir l'affichage</span>
+                    </button>
+                    
+                    <!-- Boutons de navigation participants/chat -->
+                    <button id="show-participants-btn" class="stream__btn">
+                        <img src="images/icons/participants.svg" alt="Participants" width="24" height="24">
+                        <span class="tooltip">Participants</span>
+                    </button>
+                    <button id="show-chat-btn" class="stream__btn">
+                        <img src="images/icons/chat.svg" alt="Chat" width="24" height="24">
+                        <span class="tooltip">Chat</span>
+                    </button>
+                    
+                    <!-- Contrôle d'arrêt définitif (admin only) -->
+                    <button id="end__meeting__btn" class="stream__btn admin-only" >
+                        <img src="images/icons/end-meeting.svg" alt="Arrêter définitivement" width="24" height="24">
+                        <span class="tooltip">Arrêter définitivement</span>
+                    </button>
+                    
+                </div>
+                
+            </div>
+
+            <div id="room__content">
+                <div id="video__container"></div>
+                <div class="ripple-center">
+                    <div class="ripple"></div>
+                    <div class="ripple delay1"></div>
+                    <div class="ripple delay2"></div>
+                  </div>
+            </div>
+            
+            <!-- Bloc de chat séparé -->
+            <div id="block_chat" style="display: none;">
+                <div id="room__chat" class="hidden-section">
+                    <div id="messages__container"></div>
+                    <form id="message__form">
+                        <input type="text" name="message" placeholder="Écrivez votre message..." autocomplete="off" />
+                        <button type="submit">
+                            <img src="images/icons/send-message.svg" alt="Envoyer" width="24" height="24">
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/libs/socket.io.min.js"></script>
+    <script src="js/room.js"></script>
+    
+    <!-- Scripts des boutons de la salle de réunion -->
+    <script src="js/buttons/microphone-button.js"></script>
+    <script src="js/buttons/camera-button.js"></script>
+    <script src="js/buttons/screen-button.js"></script>
+    <script src="js/buttons/fullscreen-button.js"></script>
+    <script src="js/buttons/refresh-button.js"></script>
+    <script src="js/buttons/participants-button.js"></script>
+    <script src="js/buttons/chat-button.js"></script>
+    <script src="js/buttons/leave-meeting-button.js"></script>
+    <script src="js/buttons/end-meeting-button.js"></script>
+    <script src="js/buttons/init-buttons.js"></script>
+    <script src="js/buttons/plus.js"></script>
+</body>
+</html> 

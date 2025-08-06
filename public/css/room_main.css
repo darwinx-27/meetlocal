@@ -1,0 +1,232 @@
+/**
+ * Styles pour le contenu principal de la salle de réunion
+ * Fichier CSS avec valeurs directement définies
+ */
+
+#room__main {
+    flex: 1;
+    display: flex;
+    padding: 1rem;
+    gap: 1rem;
+    overflow: hidden;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.499);
+}
+
+/* Styles pour la section du contenu (vidéos) */
+#room__content {
+    flex: 1;
+    display: flex;
+    gap: 1rem;
+    overflow: hidden;
+
+}
+
+/* Conteneur des vidéos */
+#video__container {
+    flex: 2;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+    min-height: 300px;
+    overflow-y: auto;
+    background-color: #0000009d;
+    /*midication pour l'effet ripple soit en arière plant*/
+    position: relative; /* nécessaire pour que z-index fonctionne */
+    z-index: 1; /* au-dessus du ripple */
+}
+
+
+
+/* Styles pour les différentes configurations de vidéos */
+#video__container.multiple-videos .video-wrapper {
+    flex-basis: 45%;
+    padding-bottom: 30%;
+}
+
+#video__container.grid-videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    align-items: stretch;
+    justify-content: center;
+}
+
+#video__container.grid-videos .video-wrapper {
+    flex-basis: auto;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* Ratio 16:9 */
+    margin: 0;
+}
+
+#video__container.single-video .video-wrapper {
+    flex-basis: 90%;
+    padding-bottom: 50%;
+}
+
+/* Wrapper pour chaque vidéo */
+.video-wrapper {
+    position: relative;
+    flex-basis: 45%; /* Taille par défaut pour 2 vidéos par ligne */
+    min-width: 280px;
+    min-height: 210px;
+    height: 0;
+    padding-bottom: 28%; /* Ratio adapté pour permettre plusieurs vidéos */
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-wrapper:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 24px 0 #1976d23a;
+}
+
+/* Styles pour les vidéos */
+#video__container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Pour garder les proportions */
+    background-color: #000000;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+}
+
+/* Indicateurs dans les vidéos */
+.volume-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 0; /* Sera modifié dynamiquement par JavaScript */
+    background: linear-gradient(90deg, #1976d2 0%, #63a4ff 100%);
+    transition: width 0.1s ease;
+    z-index: 2;
+}
+
+.user-label {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    z-index: 2;
+    max-width: calc(100% - 20px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.audio-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    z-index: 3;
+}
+
+.audio-status.muted {
+    background-color: rgba(255, 0, 0, 0.6);
+}
+
+/* Mode plein écran */
+.fullscreen-video {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9999 !important;
+    background: #000 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    overflow: hidden !important;
+}
+
+.fullscreen-video video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    box-shadow: none !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.fullscreen-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    z-index: 10000;
+}
+
+.fullscreen-btn {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(90deg, #1976d2 0%, #63a4ff 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.fullscreen-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #0d47a1 0%, #1976d2 100%);
+}
+
+/* Adaptations responsives */
+@media (max-width: 1024px) {
+    #room__content {
+        flex-direction: column;
+    }
+    
+    #video__container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    #room__main {
+        flex-direction: column;
+        padding: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #room__main {
+        padding: 0.5rem;
+    }
+    
+    #video__container {
+        padding: 0.5rem;
+        grid-template-columns: 1fr;
+    }
+}

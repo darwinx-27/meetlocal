@@ -1,0 +1,131 @@
+/**
+ * Styles pour le conteneur principal de la salle de réunion
+ * Fichier CSS autonome sans dépendances externes
+ */
+
+/* Variables autonomes pour ce fichier */
+:root {
+    /* Couleurs principales */
+    --container-bg-main: #f4f8fb;
+    --container-blue-gradient: linear-gradient(90deg, #1976d2 0%, #63a4ff 100%);
+    --container-border-radius: 8px;
+    --container-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --container-transition: all 0.3s ease;
+}
+
+/* Définition des animations si elles ne sont pas déjà définies */
+@keyframes containerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*TOUTES LES MODIFS POUR LE RIPPLET A PRTIR D'ICI*/
+.room__container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--container-bg-main);
+    position: relative;
+}
+
+/* Ripple central positionné en fond */
+.ripple-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    pointer-events: none;
+    z-index: 0; /* en arrière-plan */
+}
+
+/* Cercles d’oscillation */
+.ripple {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: 2px solid rgba(255, 255, 255, 0.8); /* blanc pur, légèrement transparent */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: rippleEffect 2s infinite ease-out;
+}
+
+.ripple.delay1 {
+    animation-delay: 0.6s;
+}
+
+.ripple.delay2 {
+    animation-delay: 1.2s;
+}
+
+@keyframes rippleEffect {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(3);
+        opacity: 0;
+    }
+}
+/* Animation pour les entrées/sorties */
+.room__container .animated-element {
+    animation: containerFadeIn 0.4s ease-in-out;
+}
+
+/* Styles pour le conteneur en mode plein écran */
+.room__container.fullscreen-mode {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+}
+
+/* Gestion des éléments flottants dans le conteneur */
+.room__container .floating-element {
+    position: absolute;
+    z-index: 10;
+    transition: var(--container-transition);
+}
+
+/* Styles spécifiques pour les notifications dans la salle */
+.room__container .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background: var(--container-blue-gradient);
+    color: white;
+    border-radius: var(--container-border-radius);
+    box-shadow: var(--container-shadow);
+    animation: containerFadeIn 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+/* Adaptations responsives */
+@media (max-width: 768px) {
+    .room__container {
+        height: 100%;
+        /* Permettre le défilement sur mobile */
+        overflow-y: auto;
+    }
+
+    .room__container .notification {
+        top: 10px;
+        right: 10px;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}

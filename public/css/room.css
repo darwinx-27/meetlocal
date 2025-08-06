@@ -1,0 +1,377 @@
+/**
+ * Styles généraux de la salle de réunion
+ * Les styles spécifiques aux blocs ont été déplacés vers leurs fichiers CSS respectifs:
+ * - block_participants.css : Styles pour le bloc des participants
+ * - block_chat.css : Styles pour le bloc de chat
+ * - block_bouton.css : Styles pour les boutons de contrôle
+ */
+
+.room__container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg-main);
+}
+
+/* Styles de la page room */
+#room__main {
+    flex: 1;
+    display: flex;
+    padding: 1rem;
+    gap: 1rem;
+    overflow: hidden;
+}
+
+/* Certains styles utilisés par les éléments déplacés vers d'autres fichiers */
+/* Styles déplacés vers block_participants.css */
+.user {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Styles déplacés vers block_bouton.css */
+.audio-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+}
+
+.volume-slider-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.volume-slider-container label {
+    color: var(--text-main);
+    font-size: 0.9rem;
+    min-width: 60px;
+}
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    background: #ddd;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--blue-main);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    background: var(--blue-dark);
+    transform: scale(1.2);
+}
+
+.admin-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+}
+
+.admin-icon {
+    margin-right: 5px;
+    font-size: 1.1rem;
+}
+
+#fullscreen__btn {
+    background-color: #3c4043;
+}
+
+.fullscreen-video {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9999 !important;
+    background: #000 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    overflow: hidden !important;
+}
+
+.fullscreen-video video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    box-shadow: none !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.fullscreen-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    z-index: 10000;
+}
+
+.fullscreen-btn {
+    padding: 0.5rem 1rem;
+    background: var(--blue-gradient);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.fullscreen-btn:hover {
+    transform: scale(1.05);
+    background: var(--blue-gradient-dark);
+}
+
+.audio-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    z-index: 3;
+}
+
+.audio-status.muted {
+    background-color: rgba(255, 0, 0, 0.6);
+}
+
+#room__content {
+    flex: 1;
+    display: flex;
+    gap: 1rem;
+    overflow: hidden;
+}
+
+.video-wrapper {
+    position: relative;
+    flex-basis: 45%; /* Taille par défaut pour 2 vidéos par ligne */
+    min-width: 280px;
+    min-height: 210px;
+    height: 0;
+    padding-bottom: 28%; /* Ratio adapté pour permettre plusieurs vidéos */
+    background-color: var(--bg-dark);
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Garantir que le contenu débordant est masqué */
+    box-shadow: 0 2px 8px 0 #1976d21c;
+    transition: all 0.3s ease;
+    margin-bottom: 15px; /* Espacement entre les vidéos */
+}
+
+#video__container.multiple-videos .video-wrapper {
+    flex-basis: 45%;
+    padding-bottom: 30%;
+}
+
+#video__container.grid-videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    align-items: stretch;
+    justify-content: center;
+}
+
+#video__container.grid-videos .video-wrapper {
+    flex-basis: auto;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* Ratio 16:9 */
+    margin: 0;
+}
+
+#video__container.single-video .video-wrapper {
+    flex-basis: 90%;
+    padding-bottom: 50%;
+}
+
+.video-wrapper:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 24px 0 #1976d23a;
+}
+
+#video__container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Changé de 'cover' à 'contain' pour garder les proportions */
+    background-color: var(--bg-dark);
+    max-width: 100%; /* S'assurer que la vidéo ne dépasse pas */
+    max-height: 100%; /* S'assurer que la vidéo ne dépasse pas */
+    border-radius: var(--border-radius);
+}
+
+.volume-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 0; /* Sera modifié dynamiquement par JavaScript */
+    background: var(--blue-gradient);
+    transition: width 0.1s ease;
+    z-index: 2;
+}
+
+.user-label {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    z-index: 2;
+    max-width: calc(100% - 20px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#messages__container::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+    border-radius: 3px;
+}
+
+#messages__container::-webkit-scrollbar-thumb {
+    background: var(--blue-main);
+    border-radius: 3px;
+}
+
+.message {
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    background: var(--blue-gradient);
+    border-radius: var(--border-radius);
+    color: var(--text-light);
+    word-wrap: break-word;
+    line-height: 1.4;
+    box-shadow: 0 2px 8px 0 #1976d21c;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-10px); }
+}
+
+#message__form {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+#message__form input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1.5px solid var(--blue-light);
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+#message__form input:focus {
+    outline: none;
+    border-color: var(--blue-main);
+    box-shadow: 0 0 0 2px #1976d23a;
+}
+
+#message__form button svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+@media (max-width: 1024px) {
+    #room__content {
+        flex-direction: column;
+    }
+    
+    #video__container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    #room__main {
+        flex-direction: column;
+    }
+    
+    /* Styles déplacés vers block_participants.css */
+    
+    /* Styles déplacés vers block_bouton.css */
+    
+    /* Styles déplacés vers block_bouton.css */
+    
+    /* Styles déplacés vers block_bouton.css */
+}
+
+@media (max-width: 480px) {
+    #room__main {
+        padding: 0.5rem;
+    }
+    
+    #video__container {
+        padding: 0.5rem;
+        grid-template-columns: 1fr;
+    }
+    
+    .stream__controls {
+        width: 100%;
+        bottom: 0;
+        border-radius: 0;
+        justify-content: space-around;
+    }
+    
+    .stream__btn {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .stream__btn.main-control {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .stream__btn .tooltip {
+        display: none;
+    }
+} 
